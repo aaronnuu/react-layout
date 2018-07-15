@@ -1,0 +1,16 @@
+{
+  "extends": ["standard", "standard-react"],
+  "parser": "babel-eslint",
+  "plugins": ["react"],
+  "rules": {
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/prop-types": "off",
+    "semi": "off",
+    "jsx-quotes": ["warn", "prefer-single"],
+    "no-console": "error"
+  },
+  "env": {
+    "browser": true
+  }
+}
