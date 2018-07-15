@@ -7,13 +7,23 @@
   "author": "Aaron Williams",
   "license": "MIT",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaronnuu/react-layout"
+  },
+  "keywords": [
+    "react",
+    "emotion",
+    "grid",
+    "flexbox"
+  ],
   "scripts": {
     "reinstall": "rimraf node_modules && yarn",
     "prebuild": "rimraf dist",
-    "build": "rollup -c && size-limit"
+    "build": "rollup -c && size-limit",
+    "precommit": "lint-staged"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
     "fast-memoize": "^2.5.1",
     "lodash.every": "^4.6.0",
     "lodash.omit": "^4.5.0",
