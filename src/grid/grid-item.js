@@ -26,10 +26,10 @@ const LAYOUT_PROP_KEYS = [
 ];
 
 const LAYOUT_PROP_ALIASES = {
-  gridRowStart: ['rowStart'],
-  gridRowEnd: ['rowEnd'],
-  gridColumnStart: ['columnStart'],
-  gridColumnEnd: ['columnEnd'],
+  gridRowStart: ['grs', 'rowStart'],
+  gridRowEnd: ['gre', 'rowEnd'],
+  gridColumnStart: ['gcs', 'columnStart'],
+  gridColumnEnd: ['gce', 'columnEnd'],
   gridRow: ['gr', 'row'],
   gridColumn: ['gc', 'column'],
   gridArea: ['ga', 'area'],
@@ -50,44 +50,23 @@ class GridItem extends Component {
     Component: 'div'
   };
 
-  static getDerivedStateFromProps (nextProps, prevState) {
-    if (!hasEqualKeyVals(nextProps, prevState.props, ALL_LAYOUT_PROPS)) {
-      const gridItemProps = pick(nextProps, ALL_LAYOUT_PROPS);
-      return {
-        props: nextProps,
-        gridItemClass: getLayoutClass(
-          gridItemProps,
-          LAYOUT_PROP_KEYS,
-          LAYOUT_PROP_ALIASES
-        )
-      };
-    }
-    return null;
-  }
-
-  constructor (props) {
-    super(props);
-    const gridItemProps = pick(props, ALL_LAYOUT_PROPS);
-
-    this.state = {
-      props,
-      gridItemClass: getLayoutClass(
-        gridItemProps,
-        LAYOUT_PROP_KEYS,
-        LAYOUT_PROP_ALIASES
-      )
-    };
-  }
-
   render () {
     const { Component, className, innerRef, children, ...rest } = this.props;
     const restProps = omit(rest, ALL_LAYOUT_PROPS);
+
+    const gridItemProps = pick(rest, ALL_LAYOUT_PROPS);
+    const gridItemClass = getLayoutClass(
+      gridItemProps,
+      LAYOUT_PROP_KEYS,
+      LAYOUT_PROP_ALIASES
+    );
+
     return (
       <Component
         {...restProps}
         ref={innerRef}
         className={css`
-          ${this.state.gridItemClass} ${className};
+          ${gridItemClass} ${className};
         `}
       >
         {children}

@@ -30,9 +30,9 @@ const LAYOUT_PROP_KEYS = [
 ];
 
 const LAYOUT_PROP_ALIASES = {
-  gridGap: ['gap'],
-  gridRowGap: ['rowGap'],
-  gridColumnGap: ['columnGap'],
+  gridGap: ['gg', 'gap'],
+  gridRowGap: ['grg', 'rowGap'],
+  gridColumnGap: ['gcg', 'columnGap'],
   gridTemplateRows: ['gtr', 'rows'],
   gridTemplateColumns: ['gtc', 'columns'],
   justifyItems: ['ji'],
@@ -58,44 +58,23 @@ class Grid extends Component {
     Component: 'div'
   };
 
-  static getDerivedStateFromProps (nextProps, prevState) {
-    if (!hasEqualKeyVals(nextProps, prevState.props, ALL_LAYOUT_PROPS)) {
-      const gridProps = pick(nextProps, ALL_LAYOUT_PROPS);
-      return {
-        props: nextProps,
-        gridClass: getLayoutClass(
-          gridProps,
-          LAYOUT_PROP_KEYS,
-          LAYOUT_PROP_ALIASES
-        )
-      };
-    }
-    return null;
-  }
-
-  constructor (props) {
-    super(props);
-    const gridProps = pick(props, ALL_LAYOUT_PROPS);
-
-    this.state = {
-      props,
-      gridClass: getLayoutClass(
-        gridProps,
-        LAYOUT_PROP_KEYS,
-        LAYOUT_PROP_ALIASES
-      )
-    };
-  }
-
   render () {
     const { Component, className, innerRef, children, ...rest } = this.props;
     const restProps = omit(rest, ALL_LAYOUT_PROPS);
+
+    const gridProps = pick(rest, ALL_LAYOUT_PROPS);
+    const gridClass = getLayoutClass(
+      gridProps,
+      LAYOUT_PROP_KEYS,
+      LAYOUT_PROP_ALIASES
+    );
+
     return (
       <Component
         {...restProps}
         ref={innerRef}
         className={css`
-          ${this.state.gridClass} ${className};
+          ${gridClass} ${className};
         `}
       >
         {children}

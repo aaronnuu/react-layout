@@ -2,9 +2,18 @@
 
 CSS grid and flexbox helper components for react. Uses emotion for css injection.
 
-Inspired by react-native styling the `Box` component uses `column` as the default flex-direction.
+## Features
 
-Most layout properties are aliased for convenience as described below.
+- Declarative layout - having layout properties on the component makes page layout easier to reason about while not sacrificing performance by inlining all styles
+  - Class construction is memoized based on props
+- Aliased css properties - less typing required
+  - All properties (except position which is shortened to `pos`) are shortened to the first letter of each word of the property
+  - Some of the more common properties also have easier to remember aliases (e.g. `rows` for `gridTemplateRows`)
+  - **You can either use the full prop name or any of it's aliases.**
+- Flexible breakpoints
+  - Given an integer as the key (or a string that can be parsed to an integer) the breakpoint will default as `@media (max-width: <key>px)`
+  - Anything else will simply use the key as the media query
+- Inspired by react-native styling, flex-direction defaults to column
 
 ## Getting Started
 
@@ -27,6 +36,9 @@ npm -i @aaronuu/react-layout emotion
 ```js
 import { Box, Grid, GridItem } from '@aaronuu/react-layout';
 
+const BREAKPOINT_MOBILE = '768';
+const BREAKPOINT_TABLET = '@media(min-width: 768px and max-width: 1024px)';
+
 class YourComponent extends Component {
   render() {
     return (
@@ -35,13 +47,36 @@ class YourComponent extends Component {
         columnGap="10px"
         rows="auto 1fr auto"
         columns="repeat(10, 100px)"
+        breakpoints={{
+          [BREAKPOINT_TABLET]: {
+            rows: 'auto minmax(150px, 500px) auto'
+          },
+          [BREAKPOINT_MOBILE]: {
+            rows: '1fr'
+          }
+        }}
       >
-        <GridItem Component="span" area="1 / 1 / 3 / 3">
+        <GridItem
+          Component="span"
+          area="1 / 1 / 4 / 3"
+          breakpoints={{
+            [BREAKPOINT_MOBILE]: {
+              area: '1 / 1 / 2 / 3'
+            }
+          }}
+        >
           <Box padding="10px">
             <h1>Heading</h1>
           </Box>
         </GridItem>
-        <GridItem area="1 / 3 / 3 / 10">
+        <GridItem
+          area="1 / 3 / 4 / 11"
+          breakpoints={{
+            [BREAKPOINT_MOBILE]: {
+              area: '1 / 3 / 2 / 11'
+            }
+          }}
+        >
           <Box ai="center" jc="center">
             <p>Content</p>
           </Box>
@@ -59,7 +94,7 @@ class YourComponent extends Component {
 | Prop          | Alias |
 | ------------- | ----- |
 | Component     | -     |
-| position      | -     |
+| position      | pos   |
 | top           | t     |
 | right         | r     |
 | bottom        | b     |
@@ -98,43 +133,43 @@ class YourComponent extends Component {
 
 ### Grid
 
-| Prop                | Alias        |
-| ------------------- | ------------ |
-| gridGap             | gap          |
-| gridRowGap          | rowGap       |
-| gridColumnGap       | columnGap    |
-| gridTemplateRows    | gtr, rows    |
-| gridTemplateColumns | gtc, columns |
-| justifyItems        | ji           |
-| alignItems          | ai           |
-| placeItems          | pc           |
-| justifyContent      | jc           |
-| alignContent        | ac           |
-| placeContent        | pc           |
-| gridAutoColumns     | gac          |
-| gridAutoRows        | gar          |
-| gridAutoFlow        | gaf          |
+| Prop                | Alias          |
+| ------------------- | -------------- |
+| gridGap             | gg, gap        |
+| gridRowGap          | grg, rowGap    |
+| gridColumnGap       | gcg, columnGap |
+| gridTemplateRows    | gtr, rows      |
+| gridTemplateColumns | gtc, columns   |
+| justifyItems        | ji             |
+| alignItems          | ai             |
+| placeItems          | pc             |
+| justifyContent      | jc             |
+| alignContent        | ac             |
+| placeContent        | pc             |
+| gridAutoColumns     | gac            |
+| gridAutoRows        | gar            |
+| gridAutoFlow        | gaf            |
 
 ### GridItem
 
-| Prop            | Alias       |
-| --------------- | ----------- |
-| gridRowStart    | rowStart    |
-| gridRowEnd      | rowEnd      |
-| gridColumnStart | columnStart |
-| gridColumnEnd   | columnEnd   |
-| gridRow         | gr, row     |
-| gridColumn      | gc, column  |
-| gridArea        | ga, area    |
-| justifySelf     | js          |
-| alignSelf       | as          |
-| placeSelf       | ps          |
-
-**You can either use the full prop name or any of it's aliases.**
+| Prop            | Alias            |
+| --------------- | ---------------- |
+| gridRowStart    | grs, rowStart    |
+| gridRowEnd      | gre, rowEnd      |
+| gridColumnStart | gcs, columnStart |
+| gridColumnEnd   | gce, columnEnd   |
+| gridRow         | gr, row          |
+| gridColumn      | gc, column       |
+| gridArea        | ga, area         |
+| justifySelf     | js               |
+| alignSelf       | as               |
+| placeSelf       | ps               |
 
 ## Caveats
 
-Not all flexbox properties are exposed, only the most used have been included in the initial version of the component.
+React 16 only for now.
+
+Only flexbox container properties have been exposed, all flexbox child properties will still have to be added to the child elements directly.
 
 Due to how CSS Grid works all children of the Grid component are technically 'grid items' so you aren't limited to using the `GridItem` component to style `Grid` children.
 

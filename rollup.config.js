@@ -4,7 +4,6 @@ import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import { uglify } from 'rollup-plugin-uglify';
-import { terser } from 'rollup-plugin-terser';
 import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
 
@@ -86,7 +85,7 @@ const buildCJS = ({ env }) => ({
   ]
 });
 
-const buildESM = () => ({
+const buildEntry = () => ({
   input,
   external: external.concat(Object.keys(pkg.dependencies)),
   output: [
@@ -116,5 +115,5 @@ export default [
   buildUMD({ env: 'development' }),
   buildCJS({ env: 'production' }),
   buildCJS({ env: 'development' }),
-  buildESM()
+  buildEntry()
 ];

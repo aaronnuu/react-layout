@@ -50,46 +50,24 @@ class Box extends Component {
     Component: 'div'
   };
 
-  static getDerivedStateFromProps (nextProps, prevState) {
-    if (!hasEqualKeyVals(nextProps, prevState.props, ALL_LAYOUT_PROPS)) {
-      const boxProps = pick(nextProps, ALL_LAYOUT_PROPS);
-      return {
-        props: nextProps,
-        boxClass: getLayoutClass(
-          boxProps,
-          LAYOUT_PROP_KEYS,
-          LAYOUT_PROP_ALIASES,
-          true
-        )
-      };
-    }
-    return null;
-  }
-
-  constructor (props, ...args) {
-    super(props, ...args);
-    const boxProps = pick(props, ALL_LAYOUT_PROPS);
-
-    this.state = {
-      props,
-      boxClass: getLayoutClass(
-        boxProps,
-        LAYOUT_PROP_KEYS,
-        LAYOUT_PROP_ALIASES,
-        true
-      )
-    };
-  }
-
   render () {
     const { Component, className, innerRef, children, ...rest } = this.props;
     const restProps = omit(rest, ALL_LAYOUT_PROPS);
+
+    const boxProps = pick(rest, ALL_LAYOUT_PROPS);
+    const boxClass = getLayoutClass(
+      boxProps,
+      LAYOUT_PROP_KEYS,
+      LAYOUT_PROP_ALIASES,
+      true
+    );
+
     return (
       <Component
         {...restProps}
         ref={innerRef}
         className={css`
-          ${this.state.boxClass} ${className};
+          ${boxClass} ${className};
         `}
       >
         {children}

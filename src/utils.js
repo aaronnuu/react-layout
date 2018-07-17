@@ -28,6 +28,7 @@ export const SHARED_LAYOUT_PROPS = [
 ];
 
 export const SHARED_LAYOUT_PROP_ALIASES = {
+  position: ['pos'],
   top: ['t'],
   right: ['r'],
   bottom: ['b'],
@@ -82,16 +83,16 @@ const getBreakpointStyles = (props, propKeys, propAliases, flex) => {
   if (props.breakpoints) {
     return reduce(
       props.breakpoints,
-      (styles, key) => {
-        if (typeof key === 'number') {
-          styles[`@media (max-width: ${key}px`] = getStyles(
-            props,
+      (styles, val, key) => {
+        if (!isNaN(parseInt(key))) {
+          styles[`@media (max-width: ${key}px)`] = getStyles(
+            val,
             propKeys,
             propAliases,
             flex
           );
         } else {
-          styles[key] = getStyles(props, propKeys, propAliases, flex);
+          styles[key] = getStyles(val, propKeys, propAliases, flex);
         }
         return styles;
       },
