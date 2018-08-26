@@ -28,7 +28,7 @@ yarn add @aaronuu/react-layout emotion
 Install using npm
 
 ```
-npm -i @aaronuu/react-layout emotion
+npm i @aaronuu/react-layout emotion
 ```
 
 ## Usage
