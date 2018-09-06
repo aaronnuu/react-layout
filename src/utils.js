@@ -1,6 +1,5 @@
-import { css } from 'emotion';
+import { cx, css } from 'emotion';
 import memoize from 'fast-memoize';
-import every from 'lodash.every';
 import reduce from 'lodash.reduce';
 
 export const SHARED_LAYOUT_PROPS = [
@@ -50,8 +49,6 @@ export const SHARED_LAYOUT_PROP_ALIASES = {
   marginBottom: ['mb'],
   marginLeft: ['ml']
 };
-
-export const hasEqualKeyVals = (a, b, keys) => every(keys, k => a[k] === b[k]);
 
 export const reducePropAliases = props =>
   reduce(props, (acc, prop) => acc.concat(prop), []);
@@ -114,3 +111,5 @@ export const getLayoutClass = memoize((props, propKeys, propAliases, flex) =>
     ...getStyleObject(props, propKeys, propAliases, flex)
   })
 );
+
+export const combineClasses = memoize((...args) => cx(...args));

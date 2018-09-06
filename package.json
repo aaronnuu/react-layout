@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "fast-memoize": "^2.5.1",
-    "lodash.every": "^4.6.0",
     "lodash.omit": "^4.5.0",
     "lodash.pick": "^4.4.0",
     "lodash.reduce": "^4.6.0"

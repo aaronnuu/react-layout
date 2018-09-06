@@ -1,12 +1,11 @@
 import React, { Component, forwardRef } from 'react';
-import { css } from 'emotion';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
 
 import {
-  hasEqualKeyVals,
   reducePropAliases,
   getLayoutClass,
+  combineClasses,
   SHARED_LAYOUT_PROPS,
   SHARED_LAYOUT_PROP_ALIASES
 } from '../utils';
@@ -73,9 +72,7 @@ class Grid extends Component {
       <Component
         {...restProps}
         ref={innerRef}
-        className={css`
-          ${gridClass} ${className};
-        `}
+        className={combineClasses(gridClass, className)}
       >
         {children}
       </Component>
