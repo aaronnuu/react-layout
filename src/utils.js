@@ -105,7 +105,7 @@ const getStyleObject = (...args) => ({
   ...getBreakpointStyles(...args)
 });
 
-export const getLayoutClass = memoize((props, propKeys, propAliases, flex) =>
+export const getLayoutStyles = memoize((props, propKeys, propAliases, flex) =>
   css({
     display: flex ? 'flex' : 'grid',
     ...getStyleObject(props, propKeys, propAliases, flex)

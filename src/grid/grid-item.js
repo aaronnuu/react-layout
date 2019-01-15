@@ -1,10 +1,12 @@
-import React, { Component, forwardRef } from 'react';
+/** @jsx jsx */
+import { Component, forwardRef } from 'react';
+import { jsx } from '@emotion/core';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
 
 import {
   reducePropAliases,
-  getLayoutClass,
+  getLayoutStyles,
   SHARED_LAYOUT_PROPS,
   SHARED_LAYOUT_PROP_ALIASES
 } from '../utils';
@@ -49,18 +51,18 @@ class GridItem extends Component {
   };
 
   render () {
-    const { Component, className, innerRef, children, ...rest } = this.props;
+    const { Component, css, innerRef, children, ...rest } = this.props;
     const restProps = omit(rest, ALL_LAYOUT_PROPS);
 
     const gridItemProps = pick(rest, ALL_LAYOUT_PROPS);
-    const gridItemClass = getLayoutClass(
+    const gridItemStyles = getLayoutStyles(
       gridItemProps,
       LAYOUT_PROP_KEYS,
       LAYOUT_PROP_ALIASES
     );
 
     return (
-      <Component {...restProps} ref={innerRef} css={[gridItemClass, className]}>
+      <Component {...restProps} ref={innerRef} css={[gridItemStyles, css]}>
         {children}
       </Component>
     );

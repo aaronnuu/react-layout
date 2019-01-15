@@ -1,10 +1,12 @@
-import React, { Component, forwardRef } from 'react';
+/** @jsx jsx */
+import { Component, forwardRef } from 'react';
+import { jsx } from '@emotion/core';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
 
 import {
   reducePropAliases,
-  getLayoutClass,
+  getLayoutStyles,
   SHARED_LAYOUT_PROPS,
   SHARED_LAYOUT_PROP_ALIASES
 } from './utils';
@@ -49,11 +51,11 @@ class Box extends Component {
   };
 
   render () {
-    const { Component, className, innerRef, children, ...rest } = this.props;
+    const { Component, css, innerRef, children, ...rest } = this.props;
     const restProps = omit(rest, ALL_LAYOUT_PROPS);
 
     const boxProps = pick(rest, ALL_LAYOUT_PROPS);
-    const boxClass = getLayoutClass(
+    const boxStyles = getLayoutStyles(
       boxProps,
       LAYOUT_PROP_KEYS,
       LAYOUT_PROP_ALIASES,
@@ -61,7 +63,7 @@ class Box extends Component {
     );
 
     return (
-      <Component {...restProps} ref={innerRef} css={[boxClass, className]}>
+      <Component {...restProps} ref={innerRef} css={[boxStyles, css]}>
         {children}
       </Component>
     );
