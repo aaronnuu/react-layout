@@ -22,7 +22,8 @@
     "reinstall": "rimraf node_modules && yarn",
     "prebuild": "rimraf dist",
     "build": "rollup -c && size-limit",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "fast-memoize": "^2.5.1",

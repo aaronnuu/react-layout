@@ -1,4 +1,4 @@
-import { cx, css } from '@emotion/core';
+import { css } from '@emotion/core';
 import memoize from 'fast-memoize';
 import reduce from 'lodash.reduce';
 
@@ -111,5 +111,3 @@ export const getLayoutClass = memoize((props, propKeys, propAliases, flex) =>
     ...getStyleObject(props, propKeys, propAliases, flex)
   })
 );
-
-export const combineClasses = memoize((...args) => cx(...args));

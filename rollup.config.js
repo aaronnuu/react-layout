@@ -8,7 +8,7 @@ import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
 
 const input = './index.js';
-const external = ['react', 'emotion'];
+const external = ['react', '@emotion/core'];
 
 const buildUMD = ({ env }) => ({
   input,
@@ -53,7 +53,10 @@ const buildUMD = ({ env }) => ({
 
 const buildCJS = ({ env }) => ({
   input,
-  external: external.concat(Object.keys(pkg.dependencies)),
+  external: external.concat(
+    Object.keys(pkg.dependencies),
+    Object.keys(pkg.peerDependencies)
+  ),
   output: [
     {
       file: `./dist/react-layout.cjs.${env}.js`,
@@ -87,7 +90,10 @@ const buildCJS = ({ env }) => ({
 
 const buildEntry = () => ({
   input,
-  external: external.concat(Object.keys(pkg.dependencies)),
+  external: external.concat(
+    Object.keys(pkg.dependencies),
+    Object.keys(pkg.peerDependencies)
+  ),
   output: [
     {
       file: pkg.module,

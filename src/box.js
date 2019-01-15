@@ -5,7 +5,6 @@ import omit from 'lodash.omit';
 import {
   reducePropAliases,
   getLayoutClass,
-  combineClasses,
   SHARED_LAYOUT_PROPS,
   SHARED_LAYOUT_PROP_ALIASES
 } from './utils';
@@ -62,11 +61,7 @@ class Box extends Component {
     );
 
     return (
-      <Component
-        {...restProps}
-        ref={innerRef}
-        className={combineClasses(boxClass, className)}
-      >
+      <Component {...restProps} ref={innerRef} css={[boxClass, className]}>
         {children}
       </Component>
     );

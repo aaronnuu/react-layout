@@ -5,7 +5,6 @@ import omit from 'lodash.omit';
 import {
   reducePropAliases,
   getLayoutClass,
-  combineClasses,
   SHARED_LAYOUT_PROPS,
   SHARED_LAYOUT_PROP_ALIASES
 } from '../utils';
@@ -69,11 +68,7 @@ class Grid extends Component {
     );
 
     return (
-      <Component
-        {...restProps}
-        ref={innerRef}
-        className={combineClasses(gridClass, className)}
-      >
+      <Component {...restProps} ref={innerRef} css={[gridClass, className]}>
         {children}
       </Component>
     );
