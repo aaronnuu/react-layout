@@ -8,7 +8,8 @@
     "react/prop-types": "off",
     "semi": "off",
     "jsx-quotes": ["warn", "prefer-single"],
-    "no-console": "error"
+    "no-console": "error",
+    "no-unused-vars": "off"
   },
   "env": {
     "browser": true
