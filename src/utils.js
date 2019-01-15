@@ -1,4 +1,4 @@
-import { cx, css } from 'emotion';
+import { cx, css } from '@emotion/core';
 import memoize from 'fast-memoize';
 import reduce from 'lodash.reduce';
 
