@@ -1,6 +1,6 @@
 {
   "name": "@aaronuu/react-layout",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Layout components for react",
   "main": "dist/index.js",
   "module": "dist/react-layout.esm.js",
