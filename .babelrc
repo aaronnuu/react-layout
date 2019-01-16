@@ -10,7 +10,12 @@
   ],
   "env": {
     "test": {
-      "presets": ["env", "stage-3", "react"]
+      "presets": [
+        "env",
+        "stage-3",
+        "react",
+        "@emotion/babel-preset-css-prop"
+      ]
     }
   }
 }

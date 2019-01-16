@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import React, { Component, forwardRef } from 'react';
-import { jsx } from '@emotion/core';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
 
