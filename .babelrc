@@ -2,7 +2,8 @@
   "presets": [
     ["env", { "modules": false }],
     "stage-3",
-    "react"
+    "react",
+    "@emotion/babel-preset-css-prop"
   ],
   "plugins": [
     "transform-class-properties",
