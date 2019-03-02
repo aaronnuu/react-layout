@@ -60,7 +60,7 @@ class YourComponent extends Component {
           subgrid
           rows="100px 100px 100px"
           columns="auto"
-          Component="span"
+          tag="span"
           area="1 / 1 / 4 / 3"
           breakpoints={{
             [BREAKPOINT_MOBILE]: {
@@ -98,7 +98,7 @@ class YourComponent extends Component {
 
 | Prop          | Alias |
 | ------------- | ----- |
-| Component     | -     |
+| tag           | -     |
 | position      | pos   |
 | top           | t     |
 | right         | r     |

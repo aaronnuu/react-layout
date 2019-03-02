@@ -75,13 +75,14 @@ function getAllLayoutProps (subgrid, flex) {
 
 class GridItem extends Component {
   static defaultProps = {
-    Component: 'div',
-    subgrid: false
+    tag: 'div',
+    subgrid: false,
+    flex: false
   };
 
   render () {
     const {
-      Component,
+      tag: Tag,
       css,
       innerRef,
       children,
@@ -108,9 +109,9 @@ class GridItem extends Component {
     );
 
     return (
-      <Component {...restProps} ref={innerRef} css={[gridItemStyles, css]}>
+      <Tag {...restProps} ref={innerRef} css={[gridItemStyles, css]}>
         {children}
-      </Component>
+      </Tag>
     );
   }
 }

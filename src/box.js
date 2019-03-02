@@ -25,11 +25,11 @@ const ALL_PROPS = [
 
 class Box extends Component {
   static defaultProps = {
-    Component: 'div'
+    tag: 'div'
   };
 
   render () {
-    const { Component, css, innerRef, children, ...rest } = this.props;
+    const { tag: Tag, css, innerRef, children, ...rest } = this.props;
     const restProps = omit(rest, ALL_PROPS);
 
     const boxProps = pick(rest, ALL_PROPS);
@@ -41,9 +41,9 @@ class Box extends Component {
     );
 
     return (
-      <Component {...restProps} ref={innerRef} css={[boxStyles, css]}>
+      <Tag {...restProps} ref={innerRef} css={[boxStyles, css]}>
         {children}
-      </Component>
+      </Tag>
     );
   }
 }

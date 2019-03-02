@@ -25,11 +25,11 @@ const ALL_PROPS = [
 
 class Grid extends Component {
   static defaultProps = {
-    Component: 'div'
+    tag: 'div'
   };
 
   render () {
-    const { Component, css, innerRef, children, ...rest } = this.props;
+    const { tag: Tag, css, innerRef, children, ...rest } = this.props;
     const restProps = omit(rest, ALL_PROPS);
 
     const gridProps = pick(rest, ALL_PROPS);
@@ -40,9 +40,9 @@ class Grid extends Component {
     );
 
     return (
-      <Component {...restProps} ref={innerRef} css={[gridStyles, css]}>
+      <Tag {...restProps} ref={innerRef} css={[gridStyles, css]}>
         {children}
-      </Component>
+      </Tag>
     );
   }
 }
