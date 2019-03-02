@@ -57,6 +57,9 @@ class YourComponent extends Component {
         }}
       >
         <GridItem
+          subgrid
+          rows="100px 100px 100px"
+          columns="auto"
           Component="span"
           area="1 / 1 / 4 / 3"
           breakpoints={{
@@ -70,6 +73,8 @@ class YourComponent extends Component {
           </Box>
         </GridItem>
         <GridItem
+          flex
+          flexDirection="row"
           area="1 / 3 / 4 / 11"
           breakpoints={{
             [BREAKPOINT_MOBILE]: {
@@ -115,6 +120,7 @@ class YourComponent extends Component {
 | marginRight   | mr    |
 | marginBottom  | mb    |
 | marginLeft    | ml    |
+| overflow      | o     |
 
 ### Box
 
@@ -154,6 +160,8 @@ class YourComponent extends Component {
 
 | Prop            | Alias            |
 | --------------- | ---------------- |
+| subgrid         |                  |
+| flex            |                  |
 | gridRowStart    | grs, rowStart    |
 | gridRowEnd      | gre, rowEnd      |
 | gridColumnStart | gcs, columnStart |
@@ -164,6 +172,8 @@ class YourComponent extends Component {
 | justifySelf     | js               |
 | alignSelf       | as               |
 | placeSelf       | ps               |
+
+The subgrid prop will make the `GridItem` also a `Grid` and the flex prop will make it also a `Box`
 
 ## Caveats
 

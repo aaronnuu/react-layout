@@ -7,11 +7,15 @@ import omit from 'lodash.omit';
 import {
   reducePropAliases,
   getLayoutStyles,
-  SHARED_LAYOUT_PROPS,
-  SHARED_LAYOUT_PROP_ALIASES
+  SHARED_PROPS,
+  SHARED_PROP_ALIASES,
+  GRID_PROPS,
+  GRID_PROP_ALIASES,
+  BOX_PROPS,
+  BOX_PROP_ALIASES
 } from '../utils';
 
-const LAYOUT_PROP_KEYS = [
+const GRID_ITEM_PROPS = [
   'gridRowStart',
   'gridRowEnd',
   'gridColumnStart',
@@ -22,10 +26,10 @@ const LAYOUT_PROP_KEYS = [
   'justifySelf',
   'alignSelf',
   'placeSelf',
-  ...SHARED_LAYOUT_PROPS
+  ...SHARED_PROPS
 ];
 
-const LAYOUT_PROP_ALIASES = {
+const GRID_ITEM_PROP_ALIASES = {
   gridRowStart: ['grs', 'rowStart'],
   gridRowEnd: ['gre', 'rowEnd'],
   gridColumnStart: ['gcs', 'columnStart'],
@@ -36,29 +40,71 @@ const LAYOUT_PROP_ALIASES = {
   justifySelf: ['js'],
   alignSelf: ['as'],
   placeSelf: ['ps'],
-  ...SHARED_LAYOUT_PROP_ALIASES
+  ...SHARED_PROP_ALIASES
 };
 
-const ALL_LAYOUT_PROPS = [
-  ...LAYOUT_PROP_KEYS,
-  ...reducePropAliases(LAYOUT_PROP_ALIASES),
-  'breakpoints'
-];
+const SUBGRID_PROPS = [...GRID_ITEM_PROPS, ...GRID_PROPS];
+
+const SUBGRID_PROP_ALIASES = {
+  ...GRID_ITEM_PROP_ALIASES,
+  ...GRID_PROP_ALIASES
+};
+
+const FLEX_PROPS = [...GRID_ITEM_PROPS, ...BOX_PROPS];
+
+const FLEX_PROP_ALIASES = {
+  ...GRID_ITEM_PROP_ALIASES,
+  ...BOX_PROP_ALIASES
+};
+
+function getAllLayoutProps (subgrid, flex) {
+  return subgrid
+    ? [
+      ...SUBGRID_PROPS,
+      ...reducePropAliases(SUBGRID_PROP_ALIASES),
+      'breakpoints'
+    ]
+    : flex
+      ? [...FLEX_PROPS, ...reducePropAliases(FLEX_PROP_ALIASES), 'breakpoints']
+      : [
+        ...GRID_ITEM_PROPS,
+        ...reducePropAliases(GRID_ITEM_PROP_ALIASES),
+        'breakpoints'
+      ];
+}
 
 class GridItem extends Component {
   static defaultProps = {
-    Component: 'div'
+    Component: 'div',
+    subgrid: false
   };
 
   render () {
-    const { Component, css, innerRef, children, ...rest } = this.props;
-    const restProps = omit(rest, ALL_LAYOUT_PROPS);
+    const {
+      Component,
+      css,
+      innerRef,
+      children,
+      subgrid,
+      flex,
+      ...rest
+    } = this.props;
 
-    const gridItemProps = pick(rest, ALL_LAYOUT_PROPS);
+    const allLayoutProps = getAllLayoutProps(subgrid);
+
+    const restProps = omit(rest, allLayoutProps);
+
+    const gridItemProps = pick(rest, allLayoutProps);
     const gridItemStyles = getLayoutStyles(
       gridItemProps,
-      LAYOUT_PROP_KEYS,
-      LAYOUT_PROP_ALIASES
+      subgrid ? SUBGRID_PROPS : flex ? FLEX_PROPS : GRID_ITEM_PROPS,
+      subgrid
+        ? SUBGRID_PROP_ALIASES
+        : flex
+          ? FLEX_PROP_ALIASES
+          : GRID_ITEM_PROP_ALIASES,
+      flex,
+      subgrid
     );
 
     return (

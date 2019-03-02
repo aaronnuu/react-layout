@@ -2,7 +2,7 @@ import { css } from '@emotion/core';
 import memoize from 'fast-memoize';
 import reduce from 'lodash.reduce';
 
-export const SHARED_LAYOUT_PROPS = [
+export const SHARED_PROPS = [
   'position',
   'top',
   'right',
@@ -23,10 +23,11 @@ export const SHARED_LAYOUT_PROPS = [
   'marginTop',
   'marginRight',
   'marginBottom',
-  'marginLeft'
+  'marginLeft',
+  'overflow'
 ];
 
-export const SHARED_LAYOUT_PROP_ALIASES = {
+export const SHARED_PROP_ALIASES = {
   position: ['pos'],
   top: ['t'],
   right: ['r'],
@@ -47,7 +48,68 @@ export const SHARED_LAYOUT_PROP_ALIASES = {
   marginTop: ['mt'],
   marginRight: ['mr'],
   marginBottom: ['mb'],
-  marginLeft: ['ml']
+  marginLeft: ['ml'],
+  overflow: ['o']
+};
+
+export const BOX_PROPS = [
+  'flexDirection',
+  'flexWrap',
+  'alignItems',
+  'alignContent',
+  'justifyContent',
+  'flexGrow',
+  'flexShrink',
+  'flex',
+  'flexAuto',
+  'flexNone'
+];
+
+export const BOX_PROP_ALIASES = {
+  flexDirection: ['fd', 'direction'],
+  flexWrap: ['fw', 'wrap'],
+  alignItems: ['ai'],
+  alignContent: ['ac'],
+  justifyContent: ['jc'],
+  flexGrow: ['fg'],
+  flexShrink: ['fs'],
+  flex: ['f'],
+  flexAuto: ['fa'],
+  flexNone: ['fn']
+};
+
+export const GRID_PROPS = [
+  'gridGap',
+  'gridRowGap',
+  'gridColumnGap',
+  'gridTemplateRows',
+  'gridTemplateColumns',
+  'justifyItems',
+  'alignItems',
+  'placeItems',
+  'justifyContent',
+  'alignContent',
+  'placeContent',
+  'gridAutoColumns',
+  'gridAutoRows',
+  'gridAutoFlow'
+];
+
+export const GRID_PROP_ALIASES = {
+  gridGap: ['gg', 'gap'],
+  gridRowGap: ['grg', 'rowGap'],
+  gridColumnGap: ['gcg', 'columnGap'],
+  gridTemplateRows: ['gtr', 'rows'],
+  gridTemplateColumns: ['gtc', 'columns'],
+  justifyItems: ['ji'],
+  alignItems: ['ai'],
+  placeItems: ['pi'],
+  justifyContent: ['jc'],
+  alignContent: ['ac'],
+  placeContent: ['pc'],
+  gridAutoColumns: ['gac'],
+  gridAutoRows: ['gar'],
+  gridAutoFlow: ['gaf']
 };
 
 export const reducePropAliases = props =>
@@ -105,9 +167,10 @@ const getStyleObject = (...args) => ({
   ...getBreakpointStyles(...args)
 });
 
-export const getLayoutStyles = memoize((props, propKeys, propAliases, flex) =>
-  css({
-    display: flex ? 'flex' : 'grid',
-    ...getStyleObject(props, propKeys, propAliases, flex)
-  })
+export const getLayoutStyles = memoize(
+  (props, propKeys, propAliases, flex = false, grid = true) =>
+    css({
+      display: flex ? 'flex' : grid ? 'grid' : 'block',
+      ...getStyleObject(props, propKeys, propAliases, flex)
+    })
 );

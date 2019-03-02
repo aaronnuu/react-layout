@@ -7,49 +7,19 @@ import omit from 'lodash.omit';
 import {
   reducePropAliases,
   getLayoutStyles,
-  SHARED_LAYOUT_PROPS,
-  SHARED_LAYOUT_PROP_ALIASES
+  SHARED_PROPS,
+  SHARED_PROP_ALIASES,
+  GRID_PROPS,
+  GRID_PROP_ALIASES
 } from '../utils';
 
-const LAYOUT_PROP_KEYS = [
-  'gridGap',
-  'gridRowGap',
-  'gridColumnGap',
-  'gridTemplateRows',
-  'gridTemplateColumns',
-  'justifyItems',
-  'alignItems',
-  'placeItems',
-  'justifyContent',
-  'alignContent',
-  'placeContent',
-  'gridAutoColumns',
-  'gridAutoRows',
-  'gridAutoFlow',
-  ...SHARED_LAYOUT_PROPS
-];
+const ALL_GRID_PROPS = [...SHARED_PROPS, ...GRID_PROPS];
 
-const LAYOUT_PROP_ALIASES = {
-  gridGap: ['gg', 'gap'],
-  gridRowGap: ['grg', 'rowGap'],
-  gridColumnGap: ['gcg', 'columnGap'],
-  gridTemplateRows: ['gtr', 'rows'],
-  gridTemplateColumns: ['gtc', 'columns'],
-  justifyItems: ['ji'],
-  alignItems: ['ai'],
-  placeItems: ['pi'],
-  justifyContent: ['jc'],
-  alignContent: ['ac'],
-  placeContent: ['pc'],
-  gridAutoColumns: ['gac'],
-  gridAutoRows: ['gar'],
-  gridAutoFlow: ['gaf'],
-  ...SHARED_LAYOUT_PROP_ALIASES
-};
+const ALL_GRID_PROP_ALIASES = { ...SHARED_PROP_ALIASES, ...GRID_PROP_ALIASES };
 
-const ALL_LAYOUT_PROPS = [
-  ...LAYOUT_PROP_KEYS,
-  ...reducePropAliases(LAYOUT_PROP_ALIASES),
+const ALL_PROPS = [
+  ...ALL_GRID_PROPS,
+  ...reducePropAliases({ ...SHARED_PROP_ALIASES, ...GRID_PROP_ALIASES }),
   'breakpoints'
 ];
 
@@ -60,13 +30,13 @@ class Grid extends Component {
 
   render () {
     const { Component, css, innerRef, children, ...rest } = this.props;
-    const restProps = omit(rest, ALL_LAYOUT_PROPS);
+    const restProps = omit(rest, ALL_PROPS);
 
-    const gridProps = pick(rest, ALL_LAYOUT_PROPS);
+    const gridProps = pick(rest, ALL_PROPS);
     const gridStyles = getLayoutStyles(
       gridProps,
-      LAYOUT_PROP_KEYS,
-      LAYOUT_PROP_ALIASES
+      ALL_GRID_PROPS,
+      ALL_GRID_PROP_ALIASES
     );
 
     return (
